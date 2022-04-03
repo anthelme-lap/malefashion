@@ -2,13 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\ImageRepository;
+use App\Repository\AttachementRepository;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ImageRepository::class)
+ * @ORM\Entity(repositoryClass=AttachementRepository::class)
+ * @Vich\Uploadable
  */
-class Image
+class Attachement
 {
     /**
      * @ORM\Id
@@ -20,7 +23,7 @@ class Image
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $imagename;
+    private $image;
 
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -28,30 +31,30 @@ class Image
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="fkimage")
+     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="attachements")
      * @ORM\JoinColumn(nullable=false)
      */
     private $fkproduct;
 
     /**
-     * @ORM\OneToOne(targetEntity=Category::class, inversedBy="fkimage", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @Vich\UploadableField(mapping="attachement", fileNameProperty="image")
+     * @var File
      */
-    private $fkcategory;
+    private $imageFile;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getImagename(): ?string
+    public function getImage(): ?string
     {
-        return $this->imagename;
+        return $this->image;
     }
 
-    public function setImagename(string $imagename): self
+    public function setImage(string $image): self
     {
-        $this->imagename = $imagename;
+        $this->image = $image;
 
         return $this;
     }
@@ -80,15 +83,22 @@ class Image
         return $this;
     }
 
-    public function getFkcategory(): ?Category
+    public function setImageFile(File $image = null)
     {
-        return $this->fkcategory;
+        $this->imageFile = $image;
+
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
     }
 
-    public function setFkcategory(Category $fkcategory): self
+    public function getImageFile()
     {
-        $this->fkcategory = $fkcategory;
+        return $this->imageFile;
+    }
 
-        return $this;
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
     }
 }

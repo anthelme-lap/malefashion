@@ -5,10 +5,13 @@ namespace App\Entity;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
+ * @Vich\Uploadable
  */
 class Product
 {
@@ -30,9 +33,14 @@ class Product
     private $slug;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $price;
+    private $shoesize;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $dresssize;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -40,7 +48,12 @@ class Product
     private $tag;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="integer")
+     */
+    private $price;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $description;
 
@@ -55,23 +68,31 @@ class Product
     private $createdAt;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToMany(targetEntity=Attachement::class, mappedBy="fkproduct", cascade={"persist"})
      */
-    private $dresssize;
+    private $attachements;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
-    private $shoesize;
+    private $firstimage;
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="fkproduct")
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="fkproduct")
      */
-    private $fkimage;
+    private $fkcategory;
+
+    /**
+     * @Vich\UploadableField(mapping="firstimages", fileNameProperty="firstimage")
+     * @var File
+     */
+    private $imageFile;
 
     public function __construct()
     {
-        $this->fkimage = new ArrayCollection();
+        $this->attachements = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
+        $this->fkcategory = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -103,14 +124,26 @@ class Product
         return $this;
     }
 
-    public function getPrice(): ?float
+    public function getShoesize(): ?int
     {
-        return $this->price;
+        return $this->shoesize;
     }
 
-    public function setPrice(float $price): self
+    public function setShoesize(int $shoesize): self
     {
-        $this->price = $price;
+        $this->shoesize = $shoesize;
+
+        return $this;
+    }
+
+    public function getDresssize(): ?string
+    {
+        return $this->dresssize;
+    }
+
+    public function setDresssize(string $dresssize): self
+    {
+        $this->dresssize = $dresssize;
 
         return $this;
     }
@@ -123,6 +156,18 @@ class Product
     public function setTag(?string $tag): self
     {
         $this->tag = $tag;
+
+        return $this;
+    }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(int $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }
@@ -163,57 +208,83 @@ class Product
         return $this;
     }
 
-    public function getDresssize(): ?string
+    /**
+     * @return Collection<int, Attachement>
+     */
+    public function getAttachements(): Collection
     {
-        return $this->dresssize;
+        return $this->attachements;
     }
 
-    public function setDresssize(?string $dresssize): self
+    public function addAttachement(Attachement $attachement): self
     {
-        $this->dresssize = $dresssize;
+        if (!$this->attachements->contains($attachement)) {
+            $this->attachements[] = $attachement;
+            $attachement->setFkproduct($this);
+        }
 
         return $this;
     }
 
-    public function getShoesize(): ?string
+    public function removeAttachement(Attachement $attachement): self
     {
-        return $this->shoesize;
+        if ($this->attachements->removeElement($attachement)) {
+            // set the owning side to null (unless already changed)
+            if ($attachement->getFkproduct() === $this) {
+                $attachement->setFkproduct(null);
+            }
+        }
+
+        return $this;
     }
 
-    public function setShoesize(?string $shoesize): self
+    public function getFirstimage(): ?string
     {
-        $this->shoesize = $shoesize;
+        return $this->firstimage;
+    }
+
+    public function setFirstimage(string $firstimage): self
+    {
+        $this->firstimage = $firstimage;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Image>
+     * @return Collection<int, Category>
      */
-    public function getFkimage(): Collection
+    public function getFkcategory(): Collection
     {
-        return $this->fkimage;
+        return $this->fkcategory;
     }
 
-    public function addFkimage(Image $fkimage): self
+    public function addFkcategory(Category $fkcategory): self
     {
-        if (!$this->fkimage->contains($fkimage)) {
-            $this->fkimage[] = $fkimage;
-            $fkimage->setFkproduct($this);
+        if (!$this->fkcategory->contains($fkcategory)) {
+            $this->fkcategory[] = $fkcategory;
         }
 
         return $this;
     }
 
-    public function removeFkimage(Image $fkimage): self
+    public function removeFkcategory(Category $fkcategory): self
     {
-        if ($this->fkimage->removeElement($fkimage)) {
-            // set the owning side to null (unless already changed)
-            if ($fkimage->getFkproduct() === $this) {
-                $fkimage->setFkproduct(null);
-            }
-        }
+        $this->fkcategory->removeElement($fkcategory);
 
         return $this;
+    }
+
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
     }
 }
