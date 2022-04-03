@@ -1,0 +1,242 @@
+<style>
+    form.user .form-control-user {
+    font-size: 0.8rem;
+    border-radius: 10rem;
+    padding: 1.5rem 1rem;
+    }
+    form.user .btn-user {
+    font-size: 0.8rem;
+    border-radius: 10rem;
+    padding: 0.75rem 1rem;
+    }
+    .dashboard_menu {
+        box-shadow: 0 0px 4px 0 #e9e9e9;
+    }
+    .dashboard_menu .nav-tabs li.nav-item a {
+        text-align: left;
+        padding: 12px 20px;
+        border-radius: 0;
+        border-bottom: 1px solid #efefef;
+        color: #2b2f4c;
+    }
+    .dashboard_menu .nav-tabs li.nav-item a.active {
+        background-color: #E439A1;
+        color: #fff;
+    }
+.dashboard_menu .nav-tabs li.nav-item a i {
+	margin-right: 8px;
+	vertical-align: middle;
+}
+.dashboard_content {
+	margin: 0;
+}
+.dashboard_content .card-header {
+	background-color: transparent;
+	border-color: #f0f0f0;
+}
+.dashboard_content .card-header * {
+	margin: 0;
+}
+.dashboard_content .card {
+	border-radius: 0;
+	border: 0;
+	box-shadow: 0 0px 4px 0 #e9e9e9;
+}
+.dashboard_content .card-body p:last-child {
+	margin: 0;
+}
+.dashboard_content .table {
+	margin: 0;
+}
+.dashboard_content .table thead th {
+	border: 0;
+	padding-top: 0;
+	font-weight: 600;
+}
+.dashboard_content .table tbody tr:last-child td {
+	padding-bottom: 0;
+}
+.dashboard_content .table tbody tr td {
+	vertical-align: middle;
+	white-space: nowrap;
+}
+.dashboard_content label {
+	color: #333;
+}
+.dashboard_content label .required {
+	color: #ff0000;
+}
+</style>
+
+
+<div class="section mb-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-4">
+                <div class="dashboard_menu">
+                    <ul class="nav nav-tabs flex-column" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" id="dashboard-tab" data-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="false"><i class="ti-layout-grid2"></i>Dashboard</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="orders-tab" data-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false"><i class="ti-shopping-cart-full"></i>Orders</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="address-tab" data-toggle="tab" href="#address" role="tab" aria-controls="address" aria-selected="true"><i class="ti-location-pin"></i>My Address</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="account-detail-tab" data-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="ti-id-badge"></i>Account details</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href=""><i class="ti-lock"></i>Logout</a>
+                      </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-8">
+
+                    <div class="alert alert-success alert-dismissible fade show" role="alert"> message flash
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                    </div>
+
+
+                <div class="tab-content dashboard_content">
+                      <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>HELLO</h3>
+                            </div>
+                            <div class="card-body">
+
+                                <p>From your account dashboard. you can easily check &amp; view your <a href="javascript:void(0);" onclick="$('#orders-tab').trigger('click')">recent orders</a>, manage your <a href="javascript:void(0);" onclick="$('#address-tab').trigger('click')">shipping and billing addresses</a> and <a href="javascript:void(0);" onclick="$('#account-detail-tab').trigger('click')">edit your password and account details.</a></p>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Orders</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Order</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                                <th>Total</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>#1234</td>
+                                                <td>March 15, 2020</td>
+                                                <td>Processing</td>
+                                                <td>$78.00 for 1 item</td>
+                                                <td><a href="#" class="btn btn-fill-out btn-sm">View</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>#2366</td>
+                                                <td>June 20, 2020</td>
+                                                <td>Completed</td>
+                                                <td>$81.00 for 1 item</td>
+                                                <td><a href="#" class="btn btn-fill-out btn-sm">View</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a href="" class="btn btn-fill-out mb-3">Add new address</a>
+                            </div>
+                        </div>
+                        <div class="row">
+
+
+                                    <div class="col-lg-6">
+                                        <div class="card mb-3 mb-lg-0">
+                                            <div class="card-header">
+                                                <h3> Your Address # 1 </h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <address> firstname lastname<br>
+                                                    25 Rue symfony <br>
+                                                  App n°10 <br>
+                                                    Paris <br>
+                                                    75000<br>
+                                                    France
+
+                                                </address>
+                                                <div class="btn-group">
+                                                    <a href="" class="btn btn-success">Edit</a>
+                                                    <a href="" class="btn btn-success">Delete</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="account-detail" role="tabpanel" aria-labelledby="account-detail-tab">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Account Details</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>Already have an account? <a href="#">Log in instead!</a></p>
+                                <form method="post" name="enq" class="user">
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label>First Name <span class="required">*</span></label>
+                                            <input required="" class="form-control form-control-user" name="name" type="text">
+                                         </div>
+                                         <div class="form-group col-md-6">
+                                            <label>Last Name <span class="required">*</span></label>
+                                            <input required="" class="form-control form-control-user" name="phone">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Display Name <span class="required">*</span></label>
+                                            <input required="" class="form-control form-control-user" name="dname" type="text">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Email Address <span class="required">*</span></label>
+                                            <input required="" class="form-control form-control-user" name="email" type="email">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Current Password <span class="required">*</span></label>
+                                            <input required="" class="form-control form-control-user" name="password" type="password">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>New Password <span class="required">*</span></label>
+                                            <input required="" class="form-control form-control-user" name="npassword" type="password">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Confirm Password <span class="required">*</span></label>
+                                            <input required="" class="form-control form-control-user" name="cpassword" type="password">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-fill-out" name="submit" value="Submit">Save</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
