@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -55,12 +57,22 @@ class Product
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $cut;
+    private $dresssize;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $shoesize;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="fkproduct")
+     */
+    private $fkimage;
+
+    public function __construct()
+    {
+        $this->fkimage = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -151,14 +163,14 @@ class Product
         return $this;
     }
 
-    public function getCut(): ?string
+    public function getDresssize(): ?string
     {
-        return $this->cut;
+        return $this->dresssize;
     }
 
-    public function setCut(?string $cut): self
+    public function setDresssize(?string $dresssize): self
     {
-        $this->cut = $cut;
+        $this->dresssize = $dresssize;
 
         return $this;
     }
@@ -171,6 +183,36 @@ class Product
     public function setShoesize(?string $shoesize): self
     {
         $this->shoesize = $shoesize;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Image>
+     */
+    public function getFkimage(): Collection
+    {
+        return $this->fkimage;
+    }
+
+    public function addFkimage(Image $fkimage): self
+    {
+        if (!$this->fkimage->contains($fkimage)) {
+            $this->fkimage[] = $fkimage;
+            $fkimage->setFkproduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFkimage(Image $fkimage): self
+    {
+        if ($this->fkimage->removeElement($fkimage)) {
+            // set the owning side to null (unless already changed)
+            if ($fkimage->getFkproduct() === $this) {
+                $fkimage->setFkproduct(null);
+            }
+        }
 
         return $this;
     }
