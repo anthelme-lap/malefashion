@@ -23,7 +23,7 @@ class Attachement
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $image;
+    private $images;
 
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -37,7 +37,7 @@ class Attachement
     private $fkproduct;
 
     /**
-     * @Vich\UploadableField(mapping="attachement", fileNameProperty="image")
+     * @Vich\UploadableField(mapping="attachement", fileNameProperty="images")
      * @var File
      */
     private $imageFile;
@@ -47,14 +47,14 @@ class Attachement
         return $this->id;
     }
 
-    public function getImage(): ?string
+    public function getImages(): ?string
     {
-        return $this->image;
+        return $this->images;
     }
 
-    public function setImage(string $image): self
+    public function setImages(?string $images): self
     {
-        $this->image = $image;
+        $this->images = $images;
 
         return $this;
     }
@@ -83,11 +83,11 @@ class Attachement
         return $this;
     }
 
-    public function setImageFile(File $image = null)
+    public function setImageFile(File $images = null)
     {
-        $this->imageFile = $image;
+        $this->imageFile = $images;
 
-        if ($image) {
+        if ($images) {
             $this->updatedAt = new \DateTime('now');
         }
     }

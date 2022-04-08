@@ -68,7 +68,7 @@ class Product
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Attachement::class, mappedBy="fkproduct", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=Attachement::class, mappedBy="fkproduct", cascade={"persist","remove"})
      */
     private $attachements;
 
@@ -83,16 +83,31 @@ class Product
     private $fkcategory;
 
     /**
-     * @Vich\UploadableField(mapping="firstimages", fileNameProperty="firstimage")
+     * @Vich\UploadableField(mapping="product_images", fileNameProperty="firstimage")
      * @var File
      */
     private $imageFile;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isNewArrival = false;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isBest = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isHot = false;
+
     public function __construct()
     {
         $this->attachements = new ArrayCollection();
-        $this->createdAt = new \DateTimeImmutable();
         $this->fkcategory = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable('now');
     }
 
     public function getId(): ?int
@@ -243,11 +258,25 @@ class Product
         return $this->firstimage;
     }
 
-    public function setFirstimage(string $firstimage): self
+    public function setFirstimage(?string $firstimage): self
     {
         $this->firstimage = $firstimage;
 
         return $this;
+    }
+
+    public function setImageFile(File $firstimage = null)
+    {
+        $this->imageFile = $firstimage;
+
+        if ($firstimage) {
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
     }
 
     /**
@@ -274,17 +303,39 @@ class Product
         return $this;
     }
 
-    public function setImageFile(File $image = null)
+    public function getIsNewArrival(): ?bool
     {
-        $this->imageFile = $image;
-
-        if ($image) {
-            $this->updatedAt = new \DateTime('now');
-        }
+        return $this->isNewArrival;
     }
 
-    public function getImageFile()
+    public function setIsNewArrival(?bool $isNewArrival): self
     {
-        return $this->imageFile;
+        $this->isNewArrival = $isNewArrival;
+
+        return $this;
+    }
+
+    public function getIsBest(): ?bool
+    {
+        return $this->isBest;
+    }
+
+    public function setIsBest(?bool $isBest): self
+    {
+        $this->isBest = $isBest;
+
+        return $this;
+    }
+
+    public function getIsHot(): ?bool
+    {
+        return $this->isHot;
+    }
+
+    public function setIsHot(bool $isHot): self
+    {
+        $this->isHot = $isHot;
+
+        return $this;
     }
 }
