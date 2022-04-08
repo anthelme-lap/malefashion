@@ -28,7 +28,7 @@ class AttachementRepository extends ServiceEntityRepository
     public function add(Attachement $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
-        if ($flush) {
+        if($flush) {
             $this->_em->flush();
         }
     }
