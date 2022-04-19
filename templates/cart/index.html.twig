@@ -1,7 +1,90 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CartController!{% endblock %}
+{% block title %}Panier | Male Fashion{% endblock %}
 
 {% block body %}
-dum()
+    <!-- Shopping Cart Section Begin -->
+    {{ include ('partials/breadcrumbs.html.twig',{'name': 'Panier'})}}
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="shopping__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Produit</th>
+                                <th>Quantité</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% set subtotal = 0 %}
+                        {% for data in datapaniers %}
+                            
+                            <tr>
+                                {% set subtotal = subtotal + (data.quantity * data.product.price)/100 %}
+                                <td class="product__cart__item">
+                                    <div class="product__cart__item__pic">
+                                        <img src="{{vich_uploader_asset(data.product)}} " alt="">
+                                    </div>
+                                    <div class="product__cart__item__text">
+                                        <h6>{{data.product.name}}</h6>
+                                        <h5>{{(data.product.price)/100}}Fr </h5>
+                                    </div>
+                                </td>
+                                <td class="quantity__item">
+                                    <div class="quantity">
+                                        <div class="pro-qty-2">
+                                        {# <span class="fa fa-angle-left inc qtybtn"></span> #}
+
+                                        {# <a href="" type="button">-</a> #}
+                                            <input type="text" value="{{data.quantity}} ">
+                                        {# <a href="" type="button">+</a> #}
+                                        {# <span class="fa fa-angle-right inc qtybtn"></span> #}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="cart__price">{{(data.product.price * data.quantity)/100}}Fr</td>
+                                <td class="cart__close"><a href="{{path('app_delete_cart',{id:data.product.id})}} "><i class="fa fa-close"></i></a></td>
+                            </tr>
+                        {% endfor %}    
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="continue__btn">
+                            <a href="{{path('app_home')}} ">Continuez votre achat</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="continue__btn update__btn">
+                            <a href="#"><i class="fa fa-spinner"></i> Mettre à jour le panier</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="cart__discount">
+                    <h6>Code Promo</h6>
+                    <form action="#">
+                        <input type="text" placeholder="Coupon code">
+                        <button type="submit">Appliquer</button>
+                    </form>
+                </div>
+                <div class="cart__total">
+                    <h6>Total Panier </h6>
+                    <ul>
+                        <li>Subtotal <span>{{subtotal}}Fr</span></li>
+                        <li>Total <span>{{subtotal}}Fr</span></li>
+                    </ul>
+                    <a href="{{path('app_checkout')}} " class="primary-btn">Procéder à la vérification</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shopping Cart Section End -->
 {% endblock %}

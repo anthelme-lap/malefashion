@@ -88,7 +88,7 @@ class Category
         return $this->imagecategory;
     }
 
-    public function setImagecategory(string $imagecategory): self
+    public function setImagecategory(?string $imagecategory): self
     {
         $this->imagecategory = $imagecategory;
 

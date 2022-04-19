@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
+use App\Entity\Product;
+use App\Repository\CategoryRepository;
 use App\Services\CartServices;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,36 +14,57 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
-    public function __construct(SessionInterface $session)
+    private $productRepository;
+    private $categoryRepository;
+    public function __construct(
+        ProductRepository $productRepository,
+        CategoryRepository $categoryRepository
+        )
     {
-        $this->session = $session;
+        $this->productRepository = $productRepository;
+        $this->categoryRepository = $categoryRepository;
     }
+
     /**
      * @Route("/", name="app_home")
      */
-    public function index(ProductRepository $productRepository,CartServices $cartServices): Response
+    public function index(ProductRepository $productRepository): Response
     {
         $isBest = $productRepository->findByisBest(1);
         $isHot = $productRepository->findByisHot(1);
         $isNewArrival = $productRepository->findByisNewArrival(1);
+        $products = $productRepository->findAll();
+
+        // $this->categoryRepository->findBy();
+
  
         return $this->render('home/index.html.twig',
         [
             'isBest' => $isBest,
             'isHot' => $isHot,
-            'isNewArrival' => $isNewArrival
+            'isNewArrival' => $isNewArrival,
+            'products' => $products
         ]);
     }
 
+    
+
     /**
-    * @Route("/cart/add/{id}", name="add_cart")
-    */
-    public function add($id,CartServices $cartServices,SessionInterface $session): response
+     * @Route("/product/show/{id}", name="app_product_details", methods={"GET"})
+     */
+    public function show(Product $product):Response
     {
-        
-        $cart = $cartServices->addcart($id);
-        dd($cart);
+       $categories = $product->getFkcategory()->getValues();
+
+        if($product){
+
+            return $this->render('category/proddetail.html.twig',[
+                'product' => $product,
+                 'categories'=> $categories
+            ]);
+        }
         return $this->redirectToRoute('app_home');
     }
+
      
 }

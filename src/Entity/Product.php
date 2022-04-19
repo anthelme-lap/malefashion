@@ -32,15 +32,6 @@ class Product
      */
     private $slug;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $shoesize;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $dresssize;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -103,11 +94,22 @@ class Product
      */
     private $isHot = false;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $shoesize;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $branding;
+
     public function __construct()
     {
         $this->attachements = new ArrayCollection();
         $this->fkcategory = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable('now');
+        $this->shoesizes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -135,30 +137,6 @@ class Product
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
-
-        return $this;
-    }
-
-    public function getShoesize(): ?int
-    {
-        return $this->shoesize;
-    }
-
-    public function setShoesize(int $shoesize): self
-    {
-        $this->shoesize = $shoesize;
-
-        return $this;
-    }
-
-    public function getDresssize(): ?string
-    {
-        return $this->dresssize;
-    }
-
-    public function setDresssize(string $dresssize): self
-    {
-        $this->dresssize = $dresssize;
 
         return $this;
     }
@@ -338,4 +316,33 @@ class Product
 
         return $this;
     }
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    public function getShoesize(): ?int
+    {
+        return $this->shoesize;
+    }
+
+    public function setShoesize(?int $shoesize): self
+    {
+        $this->shoesize = $shoesize;
+
+        return $this;
+    }
+
+    public function getBranding(): ?string
+    {
+        return $this->branding;
+    }
+
+    public function setBranding(?string $branding): self
+    {
+        $this->branding = $branding;
+
+        return $this;
+    }
+  
 }

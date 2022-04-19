@@ -24,8 +24,16 @@
         <div class="offcanvas__nav__option">
             <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
             <a href="#"><img src="img/icon/heart.png" alt=""></a>
-            <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-            <div class="price">$0.00</div>
+            <a href="{{path('app_cart')}}"><img src="img/icon/cart.png" alt="">
+            {% set subtotal = 0 %}
+
+            {% for item in app.session.get('cartData') %}
+                {% set subtotal = subtotal + (item.quantity * item.product.price)/100 %}
+                <span>{{item.quantity}} </span>
+            {% endfor %}
+             
+             </a>
+            <div class="price">{{subtotal}} Fr</div>
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__text">
@@ -80,16 +88,7 @@
                     <nav class="header__menu mobile-menu">
                         <ul>
                             <li class="active"><a href="{{path('app_home')}} ">Accueil</a></li>
-                            <li><a href="">Boutique</a></li>
-                            <li><a href="#">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a href="">About Us</a></li>
-                                    <li><a href="">Shop Details</a></li>
-                                    <li><a href="">Shopping Cart</a></li>
-                                    <li><a href="">Check Out</a></li>
-                                    <li><a href="">Blog Details</a></li>
-                                </ul>
-                            </li>
+                            <li><a href="{{path('app_shop')}} ">Boutique</a></li>
                             <li><a href="">Blog</a></li>
                             <li><a href="">Contacts</a></li>
                         </ul>
@@ -99,8 +98,22 @@
                     <div class="header__nav__option">
                         <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
                         <a href="#"><img src="img/icon/heart.png" alt=""></a>
-                        <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-                        <div class="price">$0.00</div>
+                        <a href="{{path('app_cart')}} "><img src="img/icon/cart.png" alt=""> 
+                            {% set total = 0 %}
+                            {% set qty = 0 %}
+                            {% if app.session.get('cartData') %}
+                                {% for item in app.session.get('cartData') %}
+                                    {% set total = total + (item.product.price * item.quantity)/100 %}
+                                    {% set qty = qty + item.quantity %}
+                                    <span>{{qty}} </span>
+                                {% endfor %}
+                                {% else %}
+                                    <span>0</span>
+                            {% endif %}
+                            
+                            
+                        </a>
+                        <div class="price"> ${{total}}</div>
                     </div>
                 </div>
             </div>

@@ -35,16 +35,17 @@ class ProductCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             TextField::new('name'),
             SlugField::new('slug')->setTargetFieldName('name')->hideOnIndex(),
-            MoneyField::new('price')->setCurrency('USD'),
-            TextField::new('dresssize'),
-            IntegerField::new('shoesize'),
+            MoneyField::new('price')->setCurrency('USD'),   
+            TextEditorField::new('description')->hideOnIndex(),
+            TextEditorField::new('moredescription')->hideOnIndex(),
             TextField::new('tag')->hideOnIndex(),
+            IntegerField::new('shoesize')->hideOnIndex(),
+            TextField::new('branding')->hideOnIndex(),
             BooleanField::new('isBest'),
             BooleanField::new('isNEwArrival'),
             BooleanField::new('isHot'),
             AssociationField::new('fkcategory')
-                        ->autocomplete()
-                        // ->setFormTypeOption('by_reference',false)
+                        ->hideOnIndex()
                         ->setTemplatePath('admin/fkcate.html.twig'),
             TextField::new('imageFile')
                     ->setFormType(VichImageType::class)

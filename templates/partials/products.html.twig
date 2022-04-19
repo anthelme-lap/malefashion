@@ -55,14 +55,16 @@
                         <div class="product__item">
                             <div class="product__item__pic set-bg" data-setbg="{{vich_uploader_asset(new)}}">
                                 <ul class="product__hover">
+                                    <li><a href="{{path('app_product_details',{'id':new.id})}}">Detail</a></li>
                                     <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
                                     <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                    <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
+                                    <li><a href="{{path('app_product_details',{id:new.id})}} "><img src="img/icon/search.png" alt=""></a></li>
                                 </ul>
                             </div>
                             <div class="product__item__text">
                                 <h6>{{new.name}} </h6>
-                                <a href="{{path('app_cart',{'id':new.id})}} " class="add-cart">+ Add To Cart</a>
+                                <a href="{{path('app_add_cart',{'id':new.id})}} " class="add-cart">+ Add To Cart</a>
+                                
                                 <div class="rating">
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
@@ -70,7 +72,7 @@
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                 </div>
-                                <h5>${{new.price}}</h5>
+                                <h5>{{(new.price)/100}}Fr</h5>
                                 <div class="product__color__select">
                                     <label for="pc-19">
                                         <input type="radio" id="pc-19">
@@ -95,12 +97,12 @@
                                 <ul class="product__hover">
                                     <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
                                     <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                    <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
+                                    <li><a href="{{path('app_product_details',{id:new.id})}}"><img src="img/icon/search.png" alt=""></a></li>
                                 </ul>
                             </div>
                             <div class="product__item__text">
                                 <h6>{{new.name}}</h6>
-                                <a href="{{path('app_cart',{'id':new.id})}} " class="add-cart">+ Add To Cart</a>
+                                <a href="{{path('app_add_cart',{'id':new.id})}} " class="add-cart">+ Ajouter au panier</a>
                                 <div class="rating">
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
@@ -108,7 +110,7 @@
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                 </div>
-                                <h5>${{new.price}}</h5>
+                                <h5>{{(new.price)/100}}Fr</h5>
                                 <div class="product__color__select">
                                     <label for="pc-22">
                                         <input type="radio" id="pc-22">
