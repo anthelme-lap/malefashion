@@ -25,6 +25,11 @@ class Adresse
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $fullname;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $quartier;
 
     /**
@@ -106,5 +111,28 @@ class Adresse
         $this->fkuser = $fkuser;
 
         return $this;
+    }
+
+    public function getFullname(): ?string
+    {
+        return $this->fullname;
+    }
+
+    public function setFullname(string $fullname): self
+    {
+        $this->fullname = $fullname;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        $result = $this->fullname."[spr]";
+        $result .= $this->ville."[spr]";
+        $result .= $this->quartier."[spr]";
+        $result .= $this->phone."[spr]";
+    
+        return $result;
+
     }
 }

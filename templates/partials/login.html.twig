@@ -31,24 +31,20 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Connexion</h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" method="post">
                                         {% if error %}
                                             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                                         {% endif %}
 
                                         {% if app.user %}
                                             <div class="mb-3">
-                                                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                                                Voudriez vous connecter comme {{ app.user.username }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
                                             </div>
                                         {% endif %}
                                         <div class="form-group">
-                                            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control form-control-user" autocomplete="email" required autofocus>
-                                            {# <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address..."> #}
+                                            <input type="email" name="email" value="{{ last_username }}" class="form-control form-control-user" autocomplete="email" required autofocus>
                                         </div>
                                         <div class="form-group">
-                                            {# <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password"> #}
                                             <input type="password" name="password" id="inputPassword" class="form-control form-control-user" autocomplete="current-password" required>
                                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                                         </div>
@@ -59,11 +55,10 @@
                                             </div>
                                         </div>
                                         <button class="btn btn-primary btn-user btn-block" type="submit">Connexion</button>
-                                        {# <a href="index.html" class="btn btn-primary btn-user btn-block">
-                                            Connexion
-                                        </a> #}
+                        
                                 
                                     </form>
+                                        
                                     <hr>
                                     <div class="text-center">
                                         <a class="small" href="">Mot de passe oublié?</a>

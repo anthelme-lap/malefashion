@@ -56,12 +56,11 @@
                         <div class="header__top__right">
                             <div class="header__top__links">
                                 {% if app.user %}
-                                <a href="#">Connexion</a>
-                                <a href="#">Déconnexion</a>
+                                    <a href="{{path('app_logout')}}">Déconnexion</a>
+                                {% else %}
+                                    <a href="{{path('app_login')}}">Connexion</a>
+                                    <a href="{{path('app_register')}}">Inscription</a>
                                 {% endif %}
-                            
-                                <a href="#">Inscription</a>
-                                
                                 <a href="#">FAQs</a>
                             </div>
                             <div class="header__top__hover">

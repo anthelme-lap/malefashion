@@ -2573,7 +2573,9 @@ ol {
 	padding-bottom: 25px;
 	margin-bottom: 30px;
 }
-
+.checkout__inpu {
+	border: solid 2px var(--pink);
+}
 .checkout__input {
 	margin-bottom: 6px;
 }

@@ -14,7 +14,6 @@ class AttachementType extends AbstractType
     {
         $builder
             ->add('imageFile', VichFileType::class)
-            
         ;
     }
 

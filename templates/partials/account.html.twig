@@ -155,39 +155,36 @@
                     <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
                         <div class="row">
                             <div class="col-lg-12">
-                                <a href="" class="btn btn-fill-out mb-3">Add new address</a>
+                                <a href="{{path('app_adresse_new')}}" class="btn btn-fill-out mb-3">Ajouter une adresse</a>
                             </div>
                         </div>
                         <div class="row">
-
-
-                                    <div class="col-lg-6">
-                                        <div class="card mb-3 mb-lg-0">
-                                            <div class="card-header">
-                                                <h3> Your Address # 1 </h3>
-                                            </div>
-                                            <div class="card-body">
-                                                <address> firstname lastname<br>
-                                                    25 Rue symfony <br>
-                                                  App n°10 <br>
-                                                    Paris <br>
-                                                    75000<br>
-                                                    France
-
-                                                </address>
-                                                <div class="btn-group">
-                                                    <a href="" class="btn btn-success">Edit</a>
-                                                    <a href="" class="btn btn-success">Delete</a>
-
-                                                </div>
-
-                                            </div>
+                            {% for item in adresses %}
+                                <div class="col-lg-6">
+                                    <div class="card mb-3 mb-lg-0">
+                                    
+                                        <div class="card-header">
+                                            <h3> Votre Adresse # {{loop.index}} </h3>
                                         </div>
+                                        <div class="card-body">
+                                        
+                                            <address> {{item.fullname}} <br>
+                                                {{item.ville}} <br>
+                                                {{item.quartier}} <br>
+                                                {{item.phone}} <br>
+                                            </address>
+                                        
+                                            <div class="btn-group">
+                                                <a href="{{path('app_adresse_edit',{id:item.id})}} " class="btn btn-success">Edit</a>
+                                                <a href="{{path('app_adresse_delete',{id:item.id})}}" class="btn btn-success">Delete</a>
+
+                                            </div>
+                                        
+                                        </div>*
+                                    
                                     </div>
-
-
-
-
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="tab-pane fade" id="account-detail" role="tabpanel" aria-labelledby="account-detail-tab">
@@ -201,15 +198,11 @@
                                     <div class="row">
                                         <div class="form-group col-md-6">
                                             <label>First Name <span class="required">*</span></label>
-                                            <input required="" class="form-control form-control-user" name="name" type="text">
+                                            <input required="" class="form-control form-control-user" value="{{app.user.firstname}}" name="name" type="text">
                                          </div>
                                          <div class="form-group col-md-6">
                                             <label>Last Name <span class="required">*</span></label>
-                                            <input required="" class="form-control form-control-user" name="phone">
-                                        </div>
-                                        <div class="form-group col-md-12">
-                                            <label>Display Name <span class="required">*</span></label>
-                                            <input required="" class="form-control form-control-user" name="dname" type="text">
+                                            <input required="" class="form-control form-control-user" value="{{app.user.lastname}}" name="phone">
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label>Email Address <span class="required">*</span></label>
