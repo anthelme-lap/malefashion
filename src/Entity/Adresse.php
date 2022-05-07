@@ -33,11 +33,6 @@ class Adresse
     private $quartier;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $phone;
@@ -73,18 +68,6 @@ class Adresse
     public function setQuartier(string $quartier): self
     {
         $this->quartier = $quartier;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
 
         return $this;
     }

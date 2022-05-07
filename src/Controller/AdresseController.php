@@ -52,12 +52,12 @@ class AdresseController extends AbstractController
         {
             $adresseRepo->add($adresse);
             // $this->redirectToroute('app_account');
-            if (!$cartServices->getFullCart())
+            if ($cartServices->getFullCart())
             {
                 return $this->redirectToroute('app_checkout_confirm');
             }
 
-            return $this->redirectToroute('app_checkout');
+            return $this->redirectToroute('app_checkout_confirm');
 
         }
 
@@ -69,6 +69,12 @@ class AdresseController extends AbstractController
     #[Route('/account/adresse/{id}', name:'app_adresse_delete', methods:['GET'])]
     public function delete(Adresse $adresse,AdresseRepository $adresseRepo): Response
     {
+        // Si user non connecté ramène sur acceuil
+        if(!$this->getUser()){
+            return $this->redirectToRoute('app_home');
+        }
+
+        // Supprime adresse ok
         $adresseRepo->remove($adresse);
         return $this->redirectToroute('app_account');
     }

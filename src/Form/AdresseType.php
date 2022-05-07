@@ -16,7 +16,6 @@ class AdresseType extends AbstractType
             ->add('ville',null, ['label' => 'Ville','attr' =>['class' => 'form-control-user']])
             ->add('quartier',null, [ 'label' => 'Quartier','attr' =>['class' => 'form-control-user']])
             ->add('phone',null, ['label' => 'Téléphone','attr' =>['class' => 'form-control-user']])
-            ->add('description',null, ['label' => 'Description','attr' =>['class' => 'form-control-user']])
         ;
     }
 

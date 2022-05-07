@@ -104,6 +104,12 @@ class Product
      */
     private $branding;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $quantity;
+
+
     public function __construct()
     {
         $this->attachements = new ArrayCollection();
@@ -341,6 +347,18 @@ class Product
     public function setBranding(?string $branding): self
     {
         $this->branding = $branding;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): self
+    {
+        $this->quantity = $quantity;
 
         return $this;
     }

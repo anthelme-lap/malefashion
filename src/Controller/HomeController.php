@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
 use App\Entity\Product;
-use App\Repository\CategoryRepository;
+use App\Entity\Category;
 use App\Services\CartServices;
 use App\Repository\ProductRepository;
+use App\Repository\CategoryRepository;
+use App\Repository\SliderHomeRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -28,26 +29,23 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="app_home")
      */
-    public function index(ProductRepository $productRepository): Response
+    public function index(ProductRepository $productRepository,SliderHomeRepository $sliderHomeRepository): Response
     {
         $isBest = $productRepository->findByisBest(1);
         $isHot = $productRepository->findByisHot(1);
         $isNewArrival = $productRepository->findByisNewArrival(1);
         $products = $productRepository->findAll();
 
-        // $this->categoryRepository->findBy();
-
- 
         return $this->render('home/index.html.twig',
         [
             'isBest' => $isBest,
             'isHot' => $isHot,
             'isNewArrival' => $isNewArrival,
-            'products' => $products
+            'products' => $products,
+            'sliders' => $sliderHomeRepository->findByisDisplay(true)
         ]);
     }
 
-    
 
     /**
      * @Route("/product/show/{id}", name="app_product_details", methods={"GET"})

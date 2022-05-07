@@ -19,13 +19,20 @@ class CheckoutController extends AbstractController
         $user = $this->getUser();
         $cart = $cartServices->getFullCart();
         // dd($cart);
-        if(!$cart){
+        if(!isset($cart)){
             return $this->redirectToroute('app_home');
         }
+
+        if(!$user){
+            return $this->redirectToroute('app_login');
+        }
+        
         // si l'utilisateur n'a pas d'adresse redirect sur page new adresse
         if(!$user->getAdresses()->getValues()){
             return $this->redirectToroute('app_adresse_new');
         }
+
+        
 
 
         $form = $this->createForm(CheckoutType::class,null,['user' => $user]);

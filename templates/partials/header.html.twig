@@ -25,15 +25,18 @@
             <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
             <a href="#"><img src="img/icon/heart.png" alt=""></a>
             <a href="{{path('app_cart')}}"><img src="img/icon/cart.png" alt="">
-            {% set subtotal = 0 %}
+           
 
-            {% for item in app.session.get('cartData') %}
-                {% set subtotal = subtotal + (item.quantity * item.product.price)/100 %}
-                <span>{{item.quantity}} </span>
-            {% endfor %}
+            {% if app.session.get('cartData') %}
+                <span>{{app.session.get('cartData').data.quantity_cart}} </span>
+            {% else %}
+                <span>0</span>
+            {% endif %}
              
-             </a>
-            <div class="price">{{subtotal}} Fr</div>
+            </a>
+            {% if app.session.get('cartData') %}
+                <div class="price">{{app.session.get('cartData').data.subTotal}} Fr</div>
+            {% endif %}
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__text">
@@ -80,7 +83,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a href="{{path('app_home')}}"><img src="img/logo.png" alt=""></a>
+                        <a href="{{path('app_home')}}"><img src="{{asset('img/logo.png')}}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
@@ -89,30 +92,26 @@
                             <li class="active"><a href="{{path('app_home')}} ">Accueil</a></li>
                             <li><a href="{{path('app_shop')}} ">Boutique</a></li>
                             <li><a href="">Blog</a></li>
-                            <li><a href="">Contacts</a></li>
+                            <li><a href="{{path('app_contact')}} ">Contact</a></li>
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
-                        <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-                        <a href="#"><img src="img/icon/heart.png" alt=""></a>
-                        <a href="{{path('app_cart')}} "><img src="img/icon/cart.png" alt=""> 
-                            {% set total = 0 %}
-                            {% set qty = 0 %}
+                        <a href="#" class="search-switch"><img src="{{asset('img/icon/search.png')}}" alt=""></a>
+                        <a href="#"><img src="{{asset('img/icon/heart.png')}}" alt=""></a>
+                        <a href="{{path('app_cart')}} "><img src="{{asset('img/icon/cart.png')}}" alt=""> 
                             {% if app.session.get('cartData') %}
-                                {% for item in app.session.get('cartData') %}
-                                    {% set total = total + (item.product.price * item.quantity)/100 %}
-                                    {% set qty = qty + item.quantity %}
-                                    <span>{{qty}} </span>
-                                {% endfor %}
-                                {% else %}
-                                    <span>0</span>
+                                <span>{{app.session.get('cartData').data.quantity_cart}} </span>
+                            {% else %}
+                                <span>0</span>
                             {% endif %}
-                            
-                            
                         </a>
-                        <div class="price"> ${{total}}</div>
+                        {% if app.session.get('cartData') %}
+                            <div class="price"> {{app.session.get('cartData').data.subTotal}} </div>
+                        {% endif %}
+                        
+                        
                     </div>
                 </div>
             </div>

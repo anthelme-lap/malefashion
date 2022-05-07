@@ -9,16 +9,19 @@
                     <h6 class="checkout__title">Adresse Details</h6>
                     <div class="row">
                         <div class="col-md-8">
-                            <h4>Adresse de livraison</h4>
+                            <h4>Verifiez votre adresse de livraison</h4>
                             <div class="checkout__inpu" style="border:solid 5px #f3f2ee;  padding:10px; border-radius:10px"> 
                                 {{adresse | replace({'[spr]':'<br>'}) | raw }}
                             </div>
                             <a href="{{path('app_adresse_edit',{id:adresse.id})}} " class="btn btn-primary btn-block">Modifier adresse</a>
                             <a href="{{path('app_checkout')}}" class="btn btn-primary btn-block">Changer adresse</a>
-                            <h4>Details</h4>
-                            <div class="checkout__inpu" style="border:solid 5px #f3f2ee; margin-bottom:70px; padding:10px; border-radius:10px"> 
-                                {{moreInformation}}
-                            </div>
+                            {% if moreInformation %}
+                                <h4>Details</h4>
+                                <div class="checkout__inpu" style="border:solid 5px #f3f2ee; margin-bottom:70px; padding:10px; border-radius:10px"> 
+                                    {{moreInformation}}
+                                </div>
+                            {% endif %}
+                            
                         </div>
                     </div>
                 </div>
@@ -26,16 +29,14 @@
                     <div class="checkout__order">
                         <h4 class="order__title">Votre Commande</h4>
                         <div class="checkout__order__products">Produict <span>Total</span></div>
-                        {% set Subtotal = 0 %}
-                        {% for item in cart %} 
-                            {% set Subtotal = Subtotal + (item.quantity * item.product.price)/100 %} 
+                        {% for item in cart.products %} 
                             <ul class="checkout__total__products">
-                                <li>{{loop.index}}.  {{item.product.name}} x {{item.quantity}} <span>{{item.product.price/100}}Fr</span> </li>
+                                <li>{{loop.index}}.  {{item.product.name}} <strong>x {{cart.data.quantity_cart}} </strong> <span>{{item.product.price/100}}Fr</span> </li>
                             </ul>
                         {% endfor %}
                             <ul class="checkout__total__all">
-                                <li>Subtotal <span>{{Subtotal}} Fr</span></li>
-                                <li>Total <span>{{Subtotal}} Fr</span></li>
+                                <li>Subtotal <span>{{cart.data.subTotal}} Fr</span></li>
+                                <li>Total <span>{{cart.data.subTotal}} Fr</span></li>
                             </ul>
                         <button type="submit" class="site-btn">PLACE ORDER</button>
                     </div>

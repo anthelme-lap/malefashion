@@ -36,18 +36,20 @@
                             <div class="checkout__order">
                                 <h4 class="order__title">Votre Commande</h4>
                                 <div class="checkout__order__products">Produit <span>Total</span></div>
-                                {% set Subtotal = 0 %}
-                                {% for item in cart %} 
-                                    {% set Subtotal = Subtotal + (item.quantity * item.product.price)/100 %} 
+                                
+                               
+                               
+                                {% for item in cart.products %} 
+                                     
                                     <ul class="checkout__total__products">
-                                        <li>{{loop.index}}. {{item.product.name}} x {{item.quantity}} <span>{{item.product.price/100}}Fr</span> </li>
+                                        <li>{{loop.index}}. {{item.product.name}} x {{cart.data.quantity_cart}} <span>{{item.product.price/100}}Fr</span> </li>
                                     </ul>
                                 {% endfor %}
-                                    <ul class="checkout__total__all">
-                                        <li>Subtotal <span>{{Subtotal}} Fr</span></li>
-                                        <li>Total <span>{{Subtotal}} Fr</span></li>
-                                    </ul>
                                 
+                                    <ul class="checkout__total__all">
+                                        <li>Subtotal <span>{{cart.data.subTotal}} Fr</span></li>
+                                        <li>Total <span>{{cart.data.subTotal}} Fr</span></li>
+                                    </ul>
                                 <button type="submit" class="site-btn">Vérification</button>
                             </div>
                         </div>

@@ -6,8 +6,8 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="product__details__breadcrumb">
-                                <a href="./index.html">Home</a>
-                                <a href="./shop.html">Shop</a>
+                                <a href="{{path('app_home')}} ">Accueil</a>
+                                <a href="{{path('app_shop')}}">Boutique</a>
                                 <span>Product Details</span>
                             </div>
                         </div>
@@ -88,18 +88,25 @@
                                 <div class="product__details__cart__option">
                                     <div class="quantity">
                                         <div class="pro-qty">
+                                        {# <span class="fa fa-angle-up dec qtybtn"></span> #}
                                             <input type="text" value="1">
+                                        {# <span class="fa fa-angle-down inc qtybtn"></span> #}
                                         </div>
                                     </div>
                                     <a href="{{path('app_add_cart',{id:product.id})}}" class="primary-btn">Ajouter au panier</a>
                                 </div>
                                 <div class="product__details__last__option">
-                                    <h5><span>Guaranteed Safe Checkout</span></h5>
-                                    <img src="{{asset('img/shop-details/details-payment.png')}}" alt="">
                                     <ul>
-                                    
-                                        {# <li><span>Catégories:</span> {{product.fkcategory.getValues()}}</li> #}
-                                        <li><span>Tag:</span> {{product.tag}}</li>
+                                        <li>
+                                            <span>Catégories:</span>
+                                            {% for category in product.fkcategory.getValues() %}
+                                                {{category.name}}, 
+                                            {% endfor %}
+                                        
+                                        </li>
+                                        {% if product.tag %}
+                                            <li><span>Tag:</span> {{product.tag}}</li>
+                                        {% endif %}
                                     </ul>
                                 </div>
                             </div>
@@ -212,47 +219,51 @@
                             <h3 class="related-title">Produit(s) rélié(s)</h3>
                         </div>
                     </div>
-                    <div class="row">
-                    {% if categories %}
-                        {% for item in categories[0].fkproduct.getValues %}
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
-                       
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="{{vich_uploader_asset(item,'imageFile')}}">
-                                    <span class="label">New</span>
-                                    <ul class="product__hover">
-                                        <li><a href="#"><img src="{{asset('img/icon/heart.png')}}" alt=""></a></li>
-                                        <li><a href="#"><img src="{{asset('img/icon/compare.png')}}" alt=""> <span>Compare</span></a></li>
-                                        <li><a href="#"><img src="{{asset('img/icon/search.png')}}" alt=""></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6>{{item.name}}</h6>
-                                    <a href="{{path('app_add_cart',{id:product.id})}}" class="add-cart">+ Ajouter au panier</a>
-                                    <div class="rating">
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
+                    <div class="row">              
+                        {% for category in product.fkcategory %}
+                            {% for productRelated in category.fkproduct %}
+                            {% if product is not same as(productRelated) %}
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
+                                    <div class="product__item">
+                                        <div class="product__item__pic set-bg" data-setbg="{{vich_uploader_asset(productRelated,'imageFile')}}">
+                                            <span class="label">New</span>
+                                            <ul class="product__hover">
+                                                <li><a href="#"><img src="{{asset('img/icon/heart.png')}}" alt=""></a></li>
+                                                <li><a href="#"><img src="{{asset('img/icon/compare.png')}}" alt=""> <span>Compare</span></a></li>
+                                                <li><a href="{{path('app_product_details',{id:productRelated.id})}} "><img src="{{asset('img/icon/search.png')}}" alt=""></a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="product__item__text">
+                                            <h6>{{productRelated.name}}</h6>
+                                            <a href="{{path('app_add_cart',{id:productRelated.id})}}" class="add-cart">+ Ajouter au panier</a>
+                                            <div class="rating">
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                            </div>
+                                            <h5>{{productRelated.price/100}} Fr</h5>
+                                            <div class="product__color__select">
+                                                <label for="pc-1">
+                                                    <input type="radio" id="pc-1">
+                                                </label>
+                                                <label class="active black" for="pc-2">
+                                                    <input type="radio" id="pc-2">
+                                                </label>
+                                                <label class="grey" for="pc-3">
+                                                    <input type="radio" id="pc-3">
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <h5>{{item.price/100}} Fr</h5>
-                                    <div class="product__color__select">
-                                        <label for="pc-1">
-                                            <input type="radio" id="pc-1">
-                                        </label>
-                                        <label class="active black" for="pc-2">
-                                            <input type="radio" id="pc-2">
-                                        </label>
-                                        <label class="grey" for="pc-3">
-                                            <input type="radio" id="pc-3">
-                                        </label>
-                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            {% endif %}
+                            
+                                
+                            {% endfor %}
+                            
                         {% endfor %}
-                    {% endif %}
                     </div>
                 </div>
             </section>

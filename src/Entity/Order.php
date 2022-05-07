@@ -41,7 +41,7 @@ class Order
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isPaid;
+    private $isPaid = false;
 
     /**
      * @ORM\Column(type="datetime_immutable")

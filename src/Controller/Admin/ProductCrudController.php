@@ -40,6 +40,7 @@ class ProductCrudController extends AbstractCrudController
             TextEditorField::new('moredescription')->hideOnIndex(),
             TextField::new('tag')->hideOnIndex(),
             IntegerField::new('shoesize')->hideOnIndex(),
+            IntegerField::new('quantity'),
             TextField::new('branding')->hideOnIndex(),
             BooleanField::new('isBest'),
             BooleanField::new('isNEwArrival'),

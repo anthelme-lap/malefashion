@@ -7,6 +7,7 @@ use App\Entity\Branding;
 use App\Entity\Category;
 use App\Entity\Product;
 use App\Entity\Shoesize;
+use App\Entity\SliderHome;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -27,7 +28,7 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Malefashion');
+            ->setTitle('Male Fashion');
     }
 
     public function configureMenuItems(): iterable
@@ -35,5 +36,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Produit', 'fas fa-list', Product::class);
         yield MenuItem::linkToCrud('Categorie', 'fas fa-list', Category::class);
+        yield MenuItem::linkToCrud('Slider', 'fas fa-list', SliderHome::class);
     }
 }

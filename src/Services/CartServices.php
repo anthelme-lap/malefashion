@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repository\ProductRepository;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CartServices {
@@ -57,18 +58,34 @@ class CartServices {
     public function getFullCart(){
         $cart = $this->getCart();
         $dataPanier = [];
-        
+        $quantity_cart = 0;
+        $subTotal = 0;
         foreach ($cart as $id => $quantity) {
             $product = $this->productRepository->find($id);
+
             if ($product) {
-                $dataPanier[]=[
+
+                // if($quantity > $product->getQuantity())
+                // {
+                //     $quantity = $product->getQuantity();
+                //     $cart[$id] = $quantity;
+                //     $this->update($cart);
+                //     dd($quantity);
+                // }
+                $dataPanier['products'][]=[
                     'quantity' => $quantity,
                     'product' => $product
                 ];
+                $quantity_cart = $quantity + $quantity_cart;
+                $subTotal = $subTotal + $quantity * $product->getPrice()/100;
             }else{
                 $this->removeProduct($id);
             }
         }
+        $dataPanier['data'] =[
+            'quantity_cart' => $quantity_cart,
+            'subTotal' => $subTotal
+        ];
 
         return $dataPanier;
     }
