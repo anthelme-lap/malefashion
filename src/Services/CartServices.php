@@ -64,14 +64,6 @@ class CartServices {
             $product = $this->productRepository->find($id);
 
             if ($product) {
-
-                // if($quantity > $product->getQuantity())
-                // {
-                //     $quantity = $product->getQuantity();
-                //     $cart[$id] = $quantity;
-                //     $this->update($cart);
-                //     dd($quantity);
-                // }
                 $dataPanier['products'][]=[
                     'quantity' => $quantity,
                     'product' => $product

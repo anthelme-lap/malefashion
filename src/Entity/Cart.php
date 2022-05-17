@@ -2,16 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\OrderRepository;
+use App\Repository\CartRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=OrderRepository::class)
- * @ORM\Table(name="`order`")
+ * @ORM\Entity(repositoryClass=CartRepository::class)
+ * @ORM\Table(name="`Cart`")
  */
-class Order
+class Cart
 {
     /**
      * @ORM\Id
@@ -51,7 +51,7 @@ class Order
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="Carts")
      * @ORM\JoinColumn(nullable=false)
      */
     private $fkuser;
@@ -67,13 +67,13 @@ class Order
     private $subTotal;
 
     /**
-     * @ORM\OneToMany(targetEntity=OrderDetail::class, mappedBy="orders")
+     * @ORM\OneToMany(targetEntity=CartDetail::class, mappedBy="Carts")
      */
-    private $orderDetail;
+    private $CartDetail;
 
     public function __construct()
     {
-        $this->orderDetail = new ArrayCollection();
+        $this->CartDetail = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -190,29 +190,29 @@ class Order
     }
 
     /**
-     * @return Collection<int, OrderDetail>
+     * @return Collection<int, CartDetail>
      */
-    public function getOrderDetail(): Collection
+    public function getCartDetail(): Collection
     {
-        return $this->orderDetail;
+        return $this->CartDetail;
     }
 
-    public function addOrderDetail(OrderDetail $orderDetail): self
+    public function addCartDetail(CartDetail $CartDetail): self
     {
-        if (!$this->orderDetail->contains($orderDetail)) {
-            $this->orderDetail[] = $orderDetail;
-            $orderDetail->setOrders($this);
+        if (!$this->CartDetail->contains($CartDetail)) {
+            $this->CartDetail[] = $CartDetail;
+            $CartDetail->setCarts($this);
         }
 
         return $this;
     }
 
-    public function removeOrderDetail(OrderDetail $orderDetail): self
+    public function removeCartDetail(CartDetail $CartDetail): self
     {
-        if ($this->orderDetail->removeElement($orderDetail)) {
+        if ($this->CartDetail->removeElement($CartDetail)) {
             // set the owning side to null (unless already changed)
-            if ($orderDetail->getOrders() === $this) {
-                $orderDetail->setOrders(null);
+            if ($CartDetail->getCarts() === $this) {
+                $CartDetail->setCarts(null);
             }
         }
 

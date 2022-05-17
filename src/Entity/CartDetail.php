@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\OrderDetailRepository;
+use App\Repository\CartDetailRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=OrderDetailRepository::class)
+ * @ORM\Entity(repositoryClass=CartDetailRepository::class)
  */
-class OrderDetail
+class CartDetail
 {
     /**
      * @ORM\Id
@@ -40,10 +40,10 @@ class OrderDetail
     private $subTotal;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Order::class, inversedBy="orderDetail")
+     * @ORM\ManyToOne(targetEntity=Cart::class, inversedBy="CartDetail")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $orders;
+    private $Carts;
 
     public function getId(): ?int
     {
@@ -98,14 +98,14 @@ class OrderDetail
         return $this;
     }
 
-    public function getOrders(): ?Order
+    public function getCarts(): ?Cart
     {
-        return $this->orders;
+        return $this->Carts;
     }
 
-    public function setOrders(?Order $orders): self
+    public function setCarts(?Cart $Carts): self
     {
-        $this->orders = $orders;
+        $this->Carts = $Carts;
 
         return $this;
     }
